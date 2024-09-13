@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Ẩn thanh cuộn trên các trình duyệt WebKit (Chrome, Safari) */
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  
+  /* Ẩn thanh cuộn trong Firefox */
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
