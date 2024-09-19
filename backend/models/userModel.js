@@ -37,8 +37,8 @@ const khachHang = new Schema({
     },
     id_room: {
         type: ObjectId,
-        ref:'room',
-        required: true
+        ref:'room'
+        // required: true
     },
     id_parish: {
         type: ObjectId,
