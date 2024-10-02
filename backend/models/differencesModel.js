@@ -1,15 +1,21 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId = Schema.ObjectId;
-const nhanxet = new Schema({
+const diemdanh = new Schema({
     id: { type: ObjectId }, // khóa chính
     check: {
         type: Boolean, // kiểu dữ liệu
         required: true, // bắt buộc phải có
     },
     date: {
-        type: String,
-        required: true
+        type: String
+        // ,
+        // required: true
+    },
+    description: {
+        type: String
+        // ,
+        // required: true
     },
     id_user: {
         type: ObjectId,
@@ -20,4 +26,4 @@ const nhanxet = new Schema({
 
 
 });
-module.exports = mongoose.models.feedback || mongoose.model('feedback', nhanxet);
+module.exports = mongoose.models.difference || mongoose.model('difference', diemdanh);
