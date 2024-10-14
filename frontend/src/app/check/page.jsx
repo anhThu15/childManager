@@ -22,7 +22,7 @@ export default function Check(){
         <>
             <div className="h-96">
                 <p class=" ms-5 italic text-2xl font-bold">Điểm Danh Thiếu Nhi -  Lớp (...) - Ngày: 15.07.2024</p>
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto" style={{height:350}}>
                   <table className="table table-zebra">
                     {/* head */}
                     <thead>
@@ -48,7 +48,6 @@ export default function Check(){
                           </tr>
                         )
                       })}
-
                     </tbody>
                     <tfoot>
                       <tr >
