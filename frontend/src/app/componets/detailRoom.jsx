@@ -7,7 +7,7 @@ export default function DetailRoom(props){
     return(
         <>
         <div className="ps-5">
-            <p class="italic text-2xl font-bold">Lớp Thêm Sức 1 - GLV: Anh Thư</p>
+            <p class="italic text-2xl font-bold">{props.data.name} - GLV: Anh Thư</p>
             <div className="flex flex-row gap-96">
               <p class="italic text-lg font-bold">Danh Sách Thiếu Nhi Trong Lớp: 
                   <Link href='/check' class="italic text-sm underline underline-offset-2 text-blue-800"> Điểm Danh : </Link>
@@ -136,7 +136,7 @@ export default function DetailRoom(props){
                             <details className="dropdown">
                               <summary className="btn m-1"><i class="fa-solid fa-ellipsis-vertical"></i></summary>
                               <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
-                                {/* <li><Link href={`/child/${id}`}>Sửa Thông Tin</Link></li> */}
+                                <li><Link href={`/child/${_id}`}>Sửa Thông Tin</Link></li>
                                 <li><a>Xóa Học Sinh</a></li>
                               </ul>
                             </details>
