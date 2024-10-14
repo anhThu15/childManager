@@ -7,10 +7,10 @@ export default function DetailRoom(props){
     return(
         <>
         <div className="ps-5">
-            <p class="italic text-2xl font-bold">{props.data.name} - GLV: Anh Thư</p>
+            <p class="italic text-2xl font-bold">Lớp gì đó- GLV: Anh Thư</p>
             <div className="flex flex-row gap-96">
               <p class="italic text-lg font-bold">Danh Sách Thiếu Nhi Trong Lớp: 
-                  <Link href='/check' class="italic text-sm underline underline-offset-2 text-blue-800"> Điểm Danh : </Link>
+                  <Link href={`/check`} class="italic text-sm underline underline-offset-2 text-blue-800"> Điểm Danh : </Link>
               </p>
               <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}><i class="fa-solid fa-plus"></i></button>
               <dialog id="my_modal_1" className="modal">
