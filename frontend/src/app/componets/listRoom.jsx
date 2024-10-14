@@ -1,59 +1,86 @@
 'use client'
 import { Accordion, AccordionContent, AccordionPanel, AccordionTitle,Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
+import DetailRoom from "./detailRoom";
 
 
-export default function ListRoom(){
+export default function ListRoom(props){
     return (
-    <div>
-      
-        <Accordion style={{width: 239}} >
-          <AccordionPanel>
-            <AccordionTitle>Lớp Thêm Sức 1</AccordionTitle>
-            <AccordionContent className="bg-slate-200">
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                Sỉ Số : 100
-              </p>
-              <p className="mb-2 text-gray-500 dark:text-gray-400">
-                GLV: Thư
-              </p>             
-            </AccordionContent>
-          </AccordionPanel>
-        </Accordion>
+      <>
+      <div className="grid grid-cols-12 text-wrap ">
+        <div className="col-span-3">
+          <div className=" overflow-y-scroll h-96">
+              <div className="flex flex-wrap ">
 
-        <button className="btn w-full" onClick={()=>document.getElementById('my_modal_2').showModal()}><i class="fa-solid fa-plus"></i></button>
-              <dialog id="my_modal_2" className="modal">
-                <div className="modal-box">
-                  <h3 className="font-bold text-3xl text-center">Thêm Lớp !</h3>
-                    <form className="flex max-w-md flex-col gap-4">
-                      <div>
-                        <div className="mb-2 block">
-                          <Label value="Lớp : " />
-                        </div>
-                        <TextInput id="email1" type="text" placeholder="Nhập Tên Lớp" required />
-                      </div>
-
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="GLV:" />
-                        </div>
-                          <Select id="countries" required>
-                            <option>Chọn Giáo Lý Viên</option>
-                            <option>Nam</option>
-                            <option>Nữ</option>
-                            <option>Khác...</option>
-                          </Select>
-                      </div>
-
-                      <Button className="mt-3 bg-red-800" type="submit">Thêm Lớp !</Button>
-                    </form>
-                  <div className="modal-action">
-                    <form method="dialog">
-                      {/* if there is a button in form, it will close the modal */}
-                      <button className="btn">Close</button>
-                    </form>
+                  <div>
+                      <Accordion style={{width: 239}} >
+                        {props.data.result.map((room) => {
+                          const { _id, name, quantity, id_parish } = room;
+                        
+                          return (
+                            <AccordionPanel key={_id}>
+                              <AccordionTitle>{name}</AccordionTitle>
+                              <AccordionContent className="bg-slate-200">
+                                <p className="mb-2 text-gray-500 dark:text-gray-400">
+                                  Sỉ Số : {quantity}
+                                </p>
+                                <p className="mb-2 text-gray-500 dark:text-gray-400">GLV: Thư</p>
+                              </AccordionContent>
+                            </AccordionPanel>
+                          );
+                        })}
+                      </Accordion>
+              
+                    {/* thêm lớp */}
+                      <button className="btn w-full" onClick={()=>document.getElementById('my_modal_2').showModal()}><i class="fa-solid fa-plus"></i></button>
+                            <dialog id="my_modal_2" className="modal">
+                              <div className="modal-box">
+                                <h3 className="font-bold text-3xl text-center">Thêm Lớp !</h3>
+                                  <form className="flex max-w-md flex-col gap-4">
+                                    <div>
+                                      <div className="mb-2 block">
+                                        <Label value="Lớp : " />
+                                      </div>
+                                      <TextInput id="email1" type="text" placeholder="Nhập Tên Lớp" required />
+                                    </div>
+              
+                                    <div className="max-w-md">
+                                      <div className="mb-2 block">
+                                        <Label value="GLV:" />
+                                      </div>
+                                        <Select id="countries" required>
+                                          <option>Chọn Giáo Lý Viên</option>
+                                          <option>Nam</option>
+                                          <option>Nữ</option>
+                                          <option>Khác...</option>
+                                        </Select>
+                                    </div>
+              
+                                    <Button className="mt-3 bg-red-800" type="submit">Thêm Lớp !</Button>
+                                  </form>
+                                <div className="modal-action">
+                                  <form method="dialog">
+                                    {/* if there is a button in form, it will close the modal */}
+                                    <button className="btn">Close</button>
+                                  </form>
+                                </div>
+                              </div>
+                            </dialog>
+                    {/* thêm lớp */}
+              
                   </div>
+              
+              </div>
+           </div>
+        </div>
+        
+        <div className="col-span-9 text-wrap bg-slate-200">
+            <div className=" overflow-y-scroll h-96">
+                <div className="flex flex-wrap">
+                    <DetailRoom/>
                 </div>
-              </dialog>
-    </div>
+            </div>
+        </div>
+      </div>
+</>
       );
 }
