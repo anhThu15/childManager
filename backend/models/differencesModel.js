@@ -8,7 +8,7 @@ const diemdanh = new Schema({
         required: true, // bắt buộc phải có
     },
     date: {
-        type: String
+        type: Date
         // ,
         // required: true
     },

@@ -5,7 +5,7 @@ import axios from 'axios';
 import { useEffect, useState } from "react";
 
 export default function ListRoom(props){
-  const [details, setDetail]  = useState([])
+  const [details, setDetail]  = useState(null)
 
   const id_parish = '66e3f7dda2a2f5d37a91fa51'
 
@@ -94,7 +94,9 @@ export default function ListRoom(props){
         <div className="col-span-9 text-wrap bg-slate-200">
             <div className=" overflow-y-scroll h-96">
                 <div className="flex flex-wrap">
-                    <DetailRoom data={details}/>
+                
+                  { details ? (<DetailRoom data={details}/>): (<p className=" font-bold text-2xl ml-5">Chọn lớp để xem lớp ....</p>)}
+                    
                 </div>
             </div>
         </div>
