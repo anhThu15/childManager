@@ -1,9 +1,26 @@
 'use client'
-import { Accordion, AccordionContent, AccordionPanel, AccordionTitle,Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
+import { Accordion, AccordionContent, AccordionPanel, AccordionTitle,Button, Label, TextInput, Select, Datepicker, FileInput  } from "flowbite-react";
 import DetailRoom from "./detailRoom";
-
+import axios from 'axios';
+import { useEffect, useState } from "react";
 
 export default function ListRoom(props){
+  const [details, setDetail]  = useState([])
+
+  const id_parish = '66e3f7dda2a2f5d37a91fa51'
+
+  const detailId = async (id) =>{
+      try {
+        const res = await axios.get(`http://localhost:3000/rooms/detailRoom/${id_parish}/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        setDetail(res.result)
+      } catch (error) {
+        console.log(error);
+      }
+  }
+  
+  console.log(details);
+  
+
     return (
       <>
       <div className="grid grid-cols-12 text-wrap ">
@@ -24,6 +41,7 @@ export default function ListRoom(props){
                                   Sỉ Số : {quantity}
                                 </p>
                                 <p className="mb-2 text-gray-500 dark:text-gray-400">GLV: Thư</p>
+                                <Button onClick={() => detailId(_id)}>Xem chi tiết</Button>
                               </AccordionContent>
                             </AccordionPanel>
                           );
@@ -76,7 +94,7 @@ export default function ListRoom(props){
         <div className="col-span-9 text-wrap bg-slate-200">
             <div className=" overflow-y-scroll h-96">
                 <div className="flex flex-wrap">
-                    <DetailRoom/>
+                    <DetailRoom data={details}/>
                 </div>
             </div>
         </div>

@@ -3,8 +3,7 @@ import { Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbit
 import Link from "next/link";
 
 
-export default function DetailRoom(){
-  const id = 1
+export default function DetailRoom(props){
     return(
         <>
         <div className="ps-5">
@@ -105,41 +104,46 @@ export default function DetailRoom(){
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  <tr>
-                    <th>1</th>
-                    <td>
-                      <div className="flex flex-wrap items-center gap-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle h-12 w-12">
-                            <img
-                              src="https://img.daisyui.com/images/profile/demo/2@94.webp"
-                              alt="Avatar Tailwind CSS Component" />
-                          </div>
-                        </div>
-                        <div>
-                          <div className="font-bold">Nguyễn Trần Anh Thư (Nam)</div>
-                          <div className="text-sm opacity-50">Gh: Phao Lô</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td>15.07.2004</td>
-                    <td>Ngành Chiên Con</td>
-                    <th>
-                      <Link href='/takeleave' className="btn btn-ghost btn-md">1/3</Link>
-                    </th>
-                    <th>
-                      <Link href='/feedback' className="btn btn-ghost btn-md"><i class="fa-regular fa-message"></i></Link>
-                    </th>
-                    <th>
-                      <details className="dropdown">
-                        <summary className="btn m-1"><i class="fa-solid fa-ellipsis-vertical"></i></summary>
-                        <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
-                          <li><Link href={`/child/${id}`}>Sửa Thông Tin</Link></li>
-                          <li><a>Xóa Học Sinh</a></li>
-                        </ul>
-                      </details>
-                    </th>
-                  </tr>
+                  {props.data.map((detail) => {
+                    const {_id , name, phone, date, branh, avatar, gender, role } = detail
+                    return(
+                        <tr key={_id}>
+                          <th>1</th>
+                          <td>
+                            <div className="flex flex-wrap items-center gap-3">
+                              <div className="avatar">
+                                <div className="mask mask-squircle h-12 w-12">
+                                  <img
+                                    src={avatar}
+                                    alt="Avatar Tailwind CSS Component" />
+                                </div>
+                              </div>
+                              <div>
+                                <div className="font-bold">{name} ({gender})</div>
+                                <div className="text-sm opacity-50">{role}</div>
+                              </div>
+                            </div>
+                          </td>
+                          <td>{date}</td>
+                          <td>Ngành {branh}</td>
+                          <th>
+                            <Link href='/takeleave' className="btn btn-ghost btn-md">1/3</Link>
+                          </th>
+                          <th>
+                            <Link href='/feedback' className="btn btn-ghost btn-md"><i class="fa-regular fa-message"></i></Link>
+                          </th>
+                          <th>
+                            <details className="dropdown">
+                              <summary className="btn m-1"><i class="fa-solid fa-ellipsis-vertical"></i></summary>
+                              <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
+                                {/* <li><Link href={`/child/${id}`}>Sửa Thông Tin</Link></li> */}
+                                <li><a>Xóa Học Sinh</a></li>
+                              </ul>
+                            </details>
+                          </th>
+                        </tr>       
+                    );                    
+                  })}
                   {/* row 1 */}
                 </tbody>
                 {/* foot */}
