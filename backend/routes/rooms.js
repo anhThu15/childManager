@@ -5,9 +5,21 @@ var modelRoom = require('../models/roomModel');
 var modelUser = require('../models/userModel');
 
 
-router.get('/', async function(req, res, next) {
-  const data = await modelRoom.find()
-  res.json(data)
+router.get('/:id_parish', async function(req, res, next) {
+  try{
+    const {id_parish} = req.params
+    const result = await modelRoom.find({id_parish:id_parish})
+
+
+    if(result != null){
+      res.json({status: 1, message:"Thành công", result});
+    }else{
+      res.json({status: 0, message:"thất bại"});
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
 })
 
 
