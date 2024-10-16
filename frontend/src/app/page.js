@@ -9,8 +9,10 @@ export default function Home() {
   const [user] = useLocalStorage('user', null);
 
   const id_parish = user.id_parish
+  console.log(id_parish);
+  
 
-  const { data: rooms, error, isLoading } = useSWR(`http://localhost:3000/rooms/${id_parish}`, fetcher,
+  const { data: rooms, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/rooms/${id_parish}`, fetcher,
     {
       refreshInterval: 6000,
     }

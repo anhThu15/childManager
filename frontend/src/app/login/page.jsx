@@ -14,7 +14,7 @@ export default function Login(){
   const onLogin = async (data) => {
     try {
       console.log(data);
-      const res = await axios.post(`http://localhost:3000/users/login`,data)
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`,data)
                                 .then((res)=>res.data)
      //  console.log(res);
      if(res){

@@ -10,7 +10,7 @@ export default function Check(){
   const id_parish = user.id_parish
   const id_room = user.id_room
 
-  const { data, error, isLoading } = useSWR(`http://localhost:3000/rooms/detailRoom/${id_parish}/${id_room}`, fetcher,
+  const { data, error, isLoading } = useSWR(`${process.env.NEXT_PUBLIC_API_URL}/rooms/detailRoom/${id_parish}/${id_room}`, fetcher,
     {
       refreshInterval: 6000,
     }
