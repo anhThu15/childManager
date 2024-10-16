@@ -2,16 +2,18 @@
 import { Accordion, AccordionContent, AccordionPanel, AccordionTitle,Button, Label, TextInput, Select, Datepicker, FileInput  } from "flowbite-react";
 import DetailRoom from "./detailRoom";
 import axios from 'axios';
+import { useLocalStorage } from 'react-use';
 import { useEffect, useState } from "react";
 
 export default function ListRoom(props){
   const [details, setDetail]  = useState(null)
+  const [user] = useLocalStorage('user', {});
 
-  const id_parish = '66e3f7dda2a2f5d37a91fa51'
+  const id_parish = user.id_parish
 
   const detailId = async (id) =>{
       try {
-        const res = await axios.get(`http://localhost:3000/rooms/detailRoom/${id_parish}/${id}`,{ revalidate: 3600 }).then((res) => res.data)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/rooms/detailRoom/${id_parish}/${id}`,{ revalidate: 3600 }).then((res) => res.data)
         setDetail(res.result)
       } catch (error) {
         console.log(error);

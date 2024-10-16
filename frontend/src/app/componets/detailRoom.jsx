@@ -114,7 +114,7 @@ export default function DetailRoom(props){
                               <div className="avatar">
                                 <div className="mask mask-squircle h-12 w-12">
                                   <img
-                                    src={avatar}
+                                    src={`${process.env.NEXT_PUBLIC_IMAGE_URL}/${avatar}`}
                                     alt="Avatar Tailwind CSS Component" />
                                 </div>
                               </div>
