@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
+var upload = require('../ulity/upload');
 
 var modelUser = require('../models/userModel');
 
