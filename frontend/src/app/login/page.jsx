@@ -8,18 +8,7 @@ import { useLocalStorage } from 'react-use';
 export default function Login(){
   const router = useRouter();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
-  const [user, setUser, removeUser] = useLocalStorage('user', {
-    _id: "",
-    name: "",
-    phone: 0,
-    date: "",
-    branh: "",
-    avatar: "",
-    gender: "",
-    role: "",
-    id_room: "",
-    id_parish: "",
-  });
+  const [user, setUser, removeUser] = useLocalStorage('user', {});
   
   // xử lý form 
   const onLogin = async (data) => {
