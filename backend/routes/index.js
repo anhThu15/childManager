@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var modelUser = require('../models/userModel');
+var modelParish = require('../models/parishModel');
 var modelDifferences = require('../models/differencesModel');
 var modelFeedback = require('../models/feedbackModel');
 
@@ -64,6 +65,17 @@ router.post('/feedBack', async function(req, res, next) {
     const {id_user, description, date} = req.body
     const feedBack = {id_user, description, date}
     var data = await modelFeedback.create(feedBack)
+
+    res.json(data)
+    
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+});
+
+router.get('/parish', async function(req, res, next) {
+  try{
+    var data = await modelParish.find()
 
     res.json(data)
     

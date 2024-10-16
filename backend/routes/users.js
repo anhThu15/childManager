@@ -32,7 +32,7 @@ router.post('/login', async function(req, res, next) {
 
 router.post('/sigin', [upload.single('avatar')], async function(req, res, next) {
   try{
-    var {name, phone, password, date, branh, gender, id_room, id_parish} = req.body
+    var {name, phone, password, date, branh, gender, id_parish} = req.body
     var avatar = req.file.originalname
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt); 
@@ -43,7 +43,7 @@ router.post('/sigin', [upload.single('avatar')], async function(req, res, next) 
     }else{
 
       const newUser = modelUser({ 
-        name, phone, password:hash, date, branh, avatar, gender , role:'Thiếu Nhi', id_room, id_parish
+        name, phone, password:hash, date, branh, avatar, gender , role:'Thiếu Nhi', id_parish
       });
 
       await newUser.save()
