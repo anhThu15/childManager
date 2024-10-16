@@ -1,6 +1,12 @@
+'use client'
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useLocalStorage } from 'react-use';
 
 export default function Header(){
+  const [, ,removeUser] = useLocalStorage('user', null);
+  const router = useRouter()
+
     return(
         <>
             <div className="navbar bg-base-100 ">
@@ -29,7 +35,7 @@ export default function Header(){
                       </a>
                     </li>
                     <li><a>Settings</a></li>
-                    <li><a>Logout</a></li>
+                    <li><button onClick={() => {removeUser() ; router.push('/login')}}>Logout</button></li>
                   </ul>
                 </div>
               </div>
