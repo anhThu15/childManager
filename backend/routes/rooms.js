@@ -26,7 +26,7 @@ router.get('/:id_parish', async function(req, res, next) {
 router.get('/detailRoom/:id_parish/:id_room', async function(req, res, next) {
   try{
     const {id_room,id_parish} = req.params
-    const result = await modelUser.find({id_room:id_room,id_parish:id_parish}).populate('id_room');
+    const result = await modelUser.find({id_room:id_room,id_parish:id_parish,role:"Thiếu Nhi"}).populate('id_room');
 
 
     if(result != null){

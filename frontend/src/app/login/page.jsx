@@ -16,8 +16,8 @@ export default function Login(){
       console.log(data);
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`,data)
                                 .then((res)=>res.data)
-     //  console.log(res);
-     if(res){
+      // console.log(res.role);
+     if(res.role == "GLV"){
        router.push('/')
        setUser(res)
      }else{

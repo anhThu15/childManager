@@ -7,10 +7,16 @@ export default function DetailRoom(props){
     return(
         <>
         <div className="ps-5">
-            <p class="italic text-2xl font-bold">Lớp gì đó- GLV: Anh Thư</p>
+        {props.data.slice(0, 1).map((detail) => {
+            const {id_room } = detail
+            return(
+            <>
+                    <p class="italic text-2xl font-bold">Lớp {id_room.name} - GLV: Anh Thư</p>
+             
+ 
             <div className="flex flex-row gap-96">
-              <p class="italic text-lg font-bold">Danh Sách Thiếu Nhi Trong Lớp: 
-                  <Link href={`/check`} class="italic text-sm underline underline-offset-2 text-blue-800"> Điểm Danh : </Link>
+              <p class="italic text-lg font-bold">Danh Sách Thiếu Nhi Trong Lớp: <br />
+                  <Link href={`/check/${id_room._id}`} class="italic text-sm underline underline-offset-2 text-blue-800"> Điểm Danh : </Link>
               </p>
               <button className="btn" onClick={()=>document.getElementById('my_modal_1').showModal()}><i class="fa-solid fa-plus"></i></button>
               <dialog id="my_modal_1" className="modal">
@@ -88,6 +94,9 @@ export default function DetailRoom(props){
                 </div>
               </dialog>
             </div>
+            </>
+             );                    
+            })}
             <div className="overflow-x-auto">
               <table className="table">
                 {/* head */}
@@ -104,11 +113,12 @@ export default function DetailRoom(props){
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  {props.data.map((detail) => {
-                    const {_id , name, phone, date, branh, avatar, gender, role } = detail
+                  {props.data.map((detail, index) => {
+                    const {_id , name, phone, date, branh, avatar, gender, role, id_room } = detail
+                    
                     return(
                         <tr key={_id}>
-                          <th>1</th>
+                          <th>{index +1}</th>
                           <td>
                             <div className="flex flex-wrap items-center gap-3">
                               <div className="avatar">
