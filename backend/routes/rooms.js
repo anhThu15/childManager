@@ -148,11 +148,11 @@ router.get('/ChildInRoom', async function(req, res, next) {
 
 router.post('/addChildByName', async function(req, res, next) {
   try {
-    const { newRoomId, name } = req.body;  
+    const { newRoomId, name, id_parish } = req.body;  
 
     // Tìm và cập nhật `id_room` của tài liệu dựa trên `name`
     const updatedUser = await modelUser.findOneAndUpdate(
-      { name: name },  
+      { name: name, id_parish: id_parish },  
       { id_room: newRoomId },  
       { new: true }  
     );

@@ -1,9 +1,42 @@
 'use client'
+import axios from "axios";
 import { Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
 import Link from "next/link";
+import { useRef } from "react";
+import { useLocalStorage } from "react-use";
 
 
 export default function DetailRoom(props){
+  const nameRef = useRef('');
+  const id_roomlRef = useRef('');
+  const id_parishRef = useRef('');
+  const [user] = useLocalStorage('user', {});
+
+  const handleAdd = async (e) => {
+    // console.log(nameRef.current.value, id_roomlRef.current.value, id_parishRef.current.value);
+    try {
+        e.preventDefault();
+        const data = {
+          name: nameRef.current.value,
+          newRoomId:  id_roomlRef.current.value,
+          id_parish: id_parishRef.current.value
+        }
+        console.log(data);
+
+        const res = await axios.post(`http://localhost:3000/rooms/addChildByName`,data).then((res) => res.data)
+
+      } catch (error) {
+        console.log(error);
+      }
+      
+  }
+
+  const handleDelete = async (_id) => {
+    // console.log(_id._id);
+    const res = await axios.post(`http://localhost:3000/rooms/deleteChild/${_id._id}`).then((res) => res.data)
+    window.location.reload();
+  }
+
     return(
         <>
         <div className="ps-5">
@@ -22,65 +55,14 @@ export default function DetailRoom(props){
               <dialog id="my_modal_1" className="modal">
                 <div className="modal-box">
                   <h3 className="font-bold text-3xl text-center">Bổ Sung Thiếu Nhi Vào Lớp !</h3>
-                    <form className="flex max-w-md flex-col gap-4">
+                    <form onSubmit={handleAdd} className="flex max-w-md flex-col gap-4" >
                       <div>
                         <div className="mb-2 block">
                           <Label value="Họ & Tên : " />
                         </div>
-                        <TextInput id="email1" type="email" placeholder="Nhập Họ & Tên" required />
-                      </div>
-
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="Giới Tính:" />
-                        </div>
-                          <Select id="countries" required>
-                            <option>Chọn Giới Tính</option>
-                            <option>Nam</option>
-                            <option>Nữ</option>
-                            <option>Khác...</option>
-                          </Select>
-                      </div>
-
-
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="Giáo Họ :" />
-                        </div>
-                          <Select id="countries" required>
-                            <option>Chọn Giáo Họ</option>
-                            <option>Canada</option>
-                            <option>France</option>
-                            <option>Germany</option>
-                          </Select>
-                      </div>
-
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="Nghành :" />
-                        </div>
-                          <Select id="countries" required>
-                            <option>Chọn Ngành</option>
-                            <option>Ngành Chiên Con</option>
-                            <option>Ngành Ấu Nhi</option>
-                            <option>Ngành Thiếu</option>
-                            <option>Ngành Nghĩa</option>
-                            <option>Ngành Hiệp Sĩ</option>
-                          </Select>
-                      </div>
-                      
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="Ngày Tháng Năm Sinh : " />
-                        </div>
-                          <Datepicker />
-                      </div>
-
-                      <div className="max-w-md">
-                        <div className="mb-2 block">
-                          <Label value="Ảnh Thiếu Nhi : " />
-                        </div>
-                          <FileInput id="file-upload" />
+                        <TextInput id="email1" type="text" ref={nameRef} placeholder="Nhập Họ & Tên" required />
+                        <input type="hidden" ref={id_roomlRef} value={id_room._id}/>
+                        <input type="hidden" ref={id_parishRef} value={user.id_parish} />
                       </div>
 
                       <Button className="mt-3 bg-red-800" type="submit">Bổ Sung !</Button>
@@ -147,7 +129,7 @@ export default function DetailRoom(props){
                               <summary className="btn m-1"><i class="fa-solid fa-ellipsis-vertical"></i></summary>
                               <ul className="menu dropdown-content bg-base-100 rounded-box z-[1] w-36 p-2 shadow">
                                 <li><Link href={`/child/${_id}`}>Sửa Thông Tin</Link></li>
-                                <li><a>Xóa Học Sinh</a></li>
+                                <li><a onClick={() => handleDelete({_id})}>Xóa Học Sinh</a></li>
                               </ul>
                             </details>
                           </th>
