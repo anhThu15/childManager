@@ -6,6 +6,24 @@ var upload = require('../ulity/upload');
 var modelUser = require('../models/userModel');
 
 /* GET users listing. */
+
+router.get('/', async function(req, res, next) {
+  try{
+    const result = await modelUser.find({role: "GLV"})
+
+
+    if(result != null){
+      res.json({status: 1, message:"Thành công", result});
+    }else{
+      res.json({status: 0, message:"thất bại"});
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+})
+
+
 router.post('/login', async function(req, res, next) {
   try{
     var {name, password } = req.body

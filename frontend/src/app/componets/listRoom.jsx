@@ -7,9 +7,19 @@ import { useEffect, useState } from "react";
 
 export default function ListRoom(props){
   const [details, setDetail]  = useState(null)
+  const [GLV, setGLV]  = useState([])
   const [user] = useLocalStorage('user', {});
 
   const id_parish = user.id_parish
+
+  useEffect(()=>{
+    const getGLV = async () => {
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users`,{ revalidate: 3600 }).then((res) => res.data)
+        setGLV(res)
+    }
+
+    getGLV();
+  },[])
 
   const detailId = async (id) =>{
       try {
@@ -20,7 +30,7 @@ export default function ListRoom(props){
       }
   }
   
-  console.log(details);
+  console.log(GLV.result);
   
 
     return (
@@ -69,9 +79,13 @@ export default function ListRoom(props){
                                       </div>
                                         <Select id="countries" required>
                                           <option>Chọn Giáo Lý Viên</option>
-                                          <option>Nam</option>
-                                          <option>Nữ</option>
-                                          <option>Khác...</option>
+                                          {GLV?.result?.map((glv) => {
+                                            return(
+                                              <>
+                                                <option value={glv._id}>{glv.name}</option>
+                                              </>
+                                            );
+                                          })}
                                         </Select>
                                     </div>
               

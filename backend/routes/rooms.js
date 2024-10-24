@@ -145,41 +145,53 @@ router.get('/ChildInRoom', async function(req, res, next) {
   
 })
 
-router.post('/addChildInRoom', async function(req, res, next) {
-  try{
-    const {name, id_room} = req.body
-    const ChildAdd = await modelUser.findOneAndUpdate(
-      {name},
-      {
-        $set: {
-          id_room: id_room
-        }
-      },
-      { new: true, omitUndefined: true } // `new: true` trả về tài liệu sau khi update, `omitUndefined` để bỏ qua các field undefined.
+
+router.post('/addChildByName', async function(req, res, next) {
+  try {
+    const { newRoomId, name } = req.body;  
+
+    // Tìm và cập nhật `id_room` của tài liệu dựa trên `name`
+    const updatedUser = await modelUser.findOneAndUpdate(
+      { name: name },  
+      { id_room: newRoomId },  
+      { new: true }  
     );
 
-    if (ChildAdd) {
-      res.json({ status: 1, message: "Thành công", data: ChildAdd });
+    if (updatedUser) {
+      res.json({ message: "Cập nhật thành công", updatedUser });
     } else {
-      res.json({ status: 0, message: "Không tìm thấy phòng" });
+      res.status(404).json({ message: "Không tìm thấy người dùng với tên này" });
     }
 
-  }catch(e){
-        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server" });
   }
 });
 
-router.delete('/deleteChild/:id', async function(req, res, next) {
-  try {
-    const {id} = req.params
-    const del = await modelUser.findByIdAndDelete(id)
 
-    res.json("xóa thành công")
+router.post('/deleteChild/:id', async function(req, res, next) {
+  try {
+    const { id } = req.params;  
+    
+    const updatedUser = await modelUser.findByIdAndUpdate(
+        id, 
+        { id_room: null},  
+        { new: true } 
+      );
+    // console.log(updatedUser);
+      
+    if (updatedUser) {
+      res.json({ message: "Cập nhật id_room thành rỗng thành công", updatedUser });
+    } else {
+      res.status(404).json({ message: "Không tìm thấy người dùng" });
+    }
     
   } catch (error) {
-    console.log(error);
+    console.error(error);
+    res.status(500).json({ message: "Lỗi server" });
   }
-})
+});
 
 
 
