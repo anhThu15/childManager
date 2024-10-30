@@ -21,9 +21,10 @@ export default function DetailRoom(props){
           newRoomId:  id_roomlRef.current.value,
           id_parish: id_parishRef.current.value
         }
-        console.log(data);
+        // console.log(data);
 
         const res = await axios.post(`http://localhost:3000/rooms/addChildByName`,data).then((res) => res.data)
+        
 
       } catch (error) {
         console.log(error);
@@ -37,6 +38,12 @@ export default function DetailRoom(props){
     window.location.reload();
   }
 
+  const glvRoles = props.data.filter(item => item.role === "GLV");
+  const glvNames = glvRoles.map(item => item.name);
+
+  const tnRoles = props.data.filter(item => item.role === "Thiếu Nhi");
+  
+
     return(
         <>
         <div className="ps-5">
@@ -44,7 +51,7 @@ export default function DetailRoom(props){
             const {id_room } = detail
             return(
             <>
-                    <p class="italic text-2xl font-bold">Lớp {id_room.name} - GLV: Anh Thư</p>
+                    <p class="italic text-2xl font-bold">Lớp {id_room.name} - GLV: {glvNames}</p>
              
  
             <div className="flex flex-row gap-96">
@@ -95,7 +102,7 @@ export default function DetailRoom(props){
                 </thead>
                 <tbody>
                   {/* row 1 */}
-                  {props.data.map((detail, index) => {
+                  {tnRoles.map((detail, index) => {
                     const {_id , name, phone, date, branh, avatar, gender, role, id_room } = detail
                     
                     return(

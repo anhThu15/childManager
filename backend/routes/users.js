@@ -7,9 +7,10 @@ var modelUser = require('../models/userModel');
 
 /* GET users listing. */
 
-router.get('/', async function(req, res, next) {
+router.get('/:id_parish', async function(req, res, next) {
   try{
-    const result = await modelUser.find({role: "GLV"})
+    const {id_parish} = req.params
+    const result = await modelUser.find({role: "GLV", id_parish: id_parish})
 
 
     if(result != null){

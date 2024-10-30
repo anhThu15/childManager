@@ -8,9 +8,8 @@ var modelUser = require('../models/userModel');
 // show room and detaiil room 
 router.get('/:id_parish', async function(req, res, next) {
   try{
-    const {id_parish} = req.params
+    const { id_parish } = req.params;
     const result = await modelRoom.find({id_parish:id_parish})
-
 
     if(result != null){
       res.json({status: 1, message:"Thành công", result});
@@ -23,10 +22,11 @@ router.get('/:id_parish', async function(req, res, next) {
   }
 })
 
+
 router.get('/detailRoom/:id_parish/:id_room', async function(req, res, next) {
   try{
     const {id_room,id_parish} = req.params
-    const result = await modelUser.find({id_room:id_room,id_parish:id_parish,role:"Thiếu Nhi"}).populate('id_room');
+    const result = await modelUser.find({id_room:id_room,id_parish:id_parish}).populate('id_room');
 
 
     if(result != null){
@@ -46,17 +46,31 @@ router.get('/detailRoom/:id_parish/:id_room', async function(req, res, next) {
 
 router.post('/addRoom', async function(req, res, next) {
   try{
-    const {name, quantity, id_parish} = req.body
-    const RoomAdd = {name, quantity, id_parish}
-    const result = await modelRoom.create(RoomAdd)
+    const { name, id_parish, userId } = req.body;
 
-    if(result != null){
-      res.json({status: 1, message:"Thành công"});
-      // res.redirect('/admins/product');
-    }else{
-      res.json({status: 0, message:"thất bại"});
+    const user = await modelUser.findOne({ _id: userId });
+
+    if (user) {
+      // Bước 2: Tạo Room mới
+      const RoomAdd = { name, id_parish };
+      const newRoom = await modelRoom.create(RoomAdd);
+
+      if (newRoom) {
+        user.id_room = newRoom._id;
+        await user.save();
+
+        res.json({
+          status: 1,
+          message: "Thêm phòng và cập nhật id_room cho user thành công",
+          room: newRoom,
+          user: user,
+        });
+      } else {
+        res.json({ status: 0, message: "Thất bại khi tạo phòng" });
+      }
+    } else {
+      res.json({ status: 0, message: "Thất bại khi tạo phòng" });
     }
-
   }catch(e){
         res.json({status: 0, message:"không tìm thấy sản phẩm "})
   }
@@ -117,16 +131,21 @@ router.post('/editRoom/:id', async function(req, res, next) {
 });
 
 router.delete('/deleteRoom/:id', async function(req, res, next) {
-    try {
-      const {id} = req.params
-      const del = await modelRoom.findByIdAndDelete(id)
+  try {
+    const { id } = req.params;
+    // res.json(id)
+    const del = await modelRoom.findByIdAndDelete(id);
 
-      res.json("xóa thành công")
-      
-    } catch (error) {
-      console.log(error);
+    if (del) {
+      res.json({ status: 1, message: "Xóa thành công", room: del });
+    } else {
+      res.status(404).json({ status: 0, message: "Không tìm thấy phòng với ID cung cấp" });
     }
-})
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ status: 0, message: "Đã xảy ra lỗi", error: error.message });
+  }
+});
 //  xử lý thêm học sinh, sửa học sinh và xóa học sinh
 
 router.get('/ChildInRoom', async function(req, res, next) {

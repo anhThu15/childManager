@@ -9,7 +9,7 @@ const phong = new Schema({
     },
     quantity: {
         type: Number,
-        required: true
+        // required: true
     },
     id_parish: {
         type: ObjectId,
