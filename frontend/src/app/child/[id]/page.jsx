@@ -22,7 +22,7 @@ export default function editChild({params}){
         setValue('branh',res.result.branh)
         setValue('gender',res.result.gender)
         setValue('phone',res.result.phone)
-        setValue('date',res.result.date)
+        // setValue('date',res.result.date)
         setValue('avatar',res.result.avatar)
         setValue('id_parish',res.result.id_parish)
       } catch (error) {
@@ -47,10 +47,9 @@ export default function editChild({params}){
       if (data.avatar && data.avatar[0]) {
         formData.append('avatar', data.avatar[0]);
       }
-      // if (!data.date) {
-      //   formData.append('date', date.value);
-      // }
-  
+      if (!data.date) {
+        formData.append('date', date.value);
+      }
       // Log formData để kiểm tra
       for (const pair of formData.entries()) {
         console.log(pair[0] + ': ' + pair[1]);

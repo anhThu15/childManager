@@ -123,7 +123,7 @@ export default function DetailRoom(props){
                               </div>
                             </div>
                           </td>
-                          <td>{date}</td>
+                          <td>{new Date(date).toLocaleDateString('vi-VN')}</td>
                           <td>Ngành {branh}</td>
                           <th>
                             <Link href='/takeleave' className="btn btn-ghost btn-md">1/3</Link>
