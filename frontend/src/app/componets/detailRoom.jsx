@@ -2,7 +2,7 @@
 import axios from "axios";
 import { Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
 import Link from "next/link";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocalStorage } from "react-use";
 
 
@@ -11,6 +11,7 @@ export default function DetailRoom(props){
   const id_roomlRef = useRef('');
   const id_parishRef = useRef('');
   const [user] = useLocalStorage('user', {});
+  const [dateNow, setDateNow] = useState(new Date().toLocaleString('vi-VN').substring(9))
 
   const handleAdd = async (e) => {
     // console.log(nameRef.current.value, id_roomlRef.current.value, id_parishRef.current.value);
@@ -42,6 +43,10 @@ export default function DetailRoom(props){
   const glvNames = glvRoles.map(item => item.name);
 
   const tnRoles = props.data.filter(item => item.role === "Thiếu Nhi");
+
+  // kiểm tra ngày 
+  
+  
   
 
     return(

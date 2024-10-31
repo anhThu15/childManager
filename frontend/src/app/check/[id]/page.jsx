@@ -38,9 +38,7 @@ export default function Check({params}){
   
 
   // console.log(tnRoles);
-
-
-
+  
   // xử lý check 
   const onCheck = async (data) =>{
     try {
@@ -48,17 +46,20 @@ export default function Check({params}){
         id_user: id,
         check: data.check[index],
         description: data.description[index]
-    }));
-    
-    // console.log({students});
-    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkChild`,{students},{ revalidate: 3600 }).then((res) => res.data)
-        if(res){
-          alert('Thành Công rồi đi chữa lành thôi')
-          router.back()
-        }else{
-          alert('Thất Bại')
-        }
-
+      }));
+      
+      // console.log({students});
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkChild`,{students},{ revalidate: 3600 }).then((res) => res.data)
+      if(res){
+        alert('Thành Công rồi đi chữa lành thôi')
+        // router.back()
+      }else{
+        alert('Thất Bại')
+      }
+      
+      // const button = document.querySelector('.btn')
+      // button.classList.add('hidden')
+ 
     } catch (error) {
       console.log(error);
     }
@@ -112,7 +113,7 @@ export default function Check({params}){
                     </tbody>
                     <tfoot>
                       <tr >
-                        <th >
+                        <th  >
                           <button type="submit" className="btn btn-success">Điểm Danh</button>
                         </th>
                       </tr>
