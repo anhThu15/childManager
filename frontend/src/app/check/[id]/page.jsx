@@ -3,11 +3,16 @@ import { Badge } from "flowbite-react";
 import { useLocalStorage } from 'react-use';
 import { useForm } from 'react-hook-form';
 import useSWR from "swr";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Check({params}){
   const [user] = useLocalStorage('user', null);
+  const router = useRouter()
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const [isChecked, setIsChecked] = useState(false);
 
   const id_parish = user.id_parish
   const id_room = params.id
@@ -17,18 +22,43 @@ export default function Check({params}){
       refreshInterval: 6000,
     }
   );
-
+  
   if (error) return <div>Lỗi load dữ liệu.</div>;
   if (isLoading) return <div>Đang tải</div>;
-  console.log(data);
+
+  const handleChange = () => {
+    setIsChecked(prevChecked => !prevChecked); // Chuyển đổi trạng thái checkbox
+  };
+
+  
+  const tnRoles = data.result.filter(item => item.role === "Thiếu Nhi");
+  tnRoles.map(id => {
+    setValue('id_user', id._id); 
+  });
+  
+
+  // console.log(tnRoles);
 
 
 
   // xử lý check 
-  const onCheck = (data) =>{
+  const onCheck = async (data) =>{
     try {
-      console.log(data);
-      
+      const students = Object.entries(data.id_user).map(([id, index]) => ({
+        id_user: id,
+        check: data.check[index],
+        description: data.description[index]
+    }));
+    
+    // console.log({students});
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkChild`,{students},{ revalidate: 3600 }).then((res) => res.data)
+        if(res){
+          alert('Thành Công rồi đi chữa lành thôi')
+          router.back()
+        }else{
+          alert('Thất Bại')
+        }
+
     } catch (error) {
       console.log(error);
     }
@@ -37,13 +67,14 @@ export default function Check({params}){
     return (
         <>
             <div className="h-96">
-            {data.result.slice(0,1).map((child, index) => {
+            {tnRoles.slice(0,1).map((child, index) => {
                         const{_id , id_room} = child
                         return(                        
                           <p class=" ms-5 italic text-2xl font-bold">Điểm Danh Thiếu Nhi -  Lớp {id_room.name}</p>
                         )
                       })}
                 <div className="overflow-x-auto" style={{height:350}}>
+                <form onSubmit={handleSubmit(onCheck)}>
                   <table className="table table-zebra">
                     {/* head */}
                     <thead>
@@ -57,18 +88,24 @@ export default function Check({params}){
                     </thead>
                     <tbody>
                       {/* row 1 */}
-                      {data.result.map((child, index) => {
+                      {tnRoles.map((child, index) => {
                         const{_id , name} = child
                         return(
                               <tr key={_id}>
                                 <th>{index + 1}</th>
                                 <td>
                                   {name}
-                                  <input type="hidden" />
+                                  <input type="hidden" {...register(`id_user.${_id}`)} value={index} />
                                 </td>
-                                <td><input type="checkbox" className="toggle toggle-success" defaultChecked/></td>
+                                <td>
+                                    <input 
+                                      type="checkbox" 
+                                      className="toggle toggle-success" 
+                                      {...register(`check.${index}`)} // Đặt tên cho checkbox độc lập
+                                    />
+                                </td>
                                 <td><Badge  color="failure" size="sm">1/3</Badge></td>
-                                <td><textarea className="textarea textarea-bordered" placeholder="Bio"></textarea></td>
+                                <td><textarea className="textarea textarea-bordered" {...register(`description.${index}`)} placeholder="Bio"></textarea></td>
                               </tr>
                         )
                       })}
@@ -76,11 +113,12 @@ export default function Check({params}){
                     <tfoot>
                       <tr >
                         <th >
-                          <button className="btn btn-success">Điểm Danh</button>
+                          <button type="submit" className="btn btn-success">Điểm Danh</button>
                         </th>
                       </tr>
                     </tfoot>
                   </table>
+                </form>
                 </div>
             </div>
         </>

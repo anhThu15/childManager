@@ -41,10 +41,12 @@ router.post('/checkChild', async function(req, res, next) {
       try {
         // Tạo bản ghi điểm danh mới
         const newAttendance = new modelDifferences({
-          id_user,     // ID học sinh
-          check,       // Trạng thái đi học hay không
-          description, // Mô tả lý do (nếu có)
-          date: new Date() // Ngày điểm danh
+          id_user,     
+          check,       
+          description, 
+          date: new Date().toLocaleString('vi-VN', {
+                  timeZone: 'Asia/Ho_Chi_Minh', // Đảm bảo sử dụng múi giờ Việt Nam
+                }) // Ngày điểm danh được định dạng
         });
 
         // Lưu bản ghi vào cơ sở dữ liệu
