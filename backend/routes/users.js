@@ -7,6 +7,23 @@ var modelUser = require('../models/userModel');
 
 /* GET users listing. */
 
+router.get('/:id', async function(req, res, next) {
+  try{
+    const {id} = req.params
+    const result = await modelUser.findById(id)
+
+
+    if(result != null){
+      res.json({status: 1, message:"Thành công", result});
+    }else{
+      res.json({status: 0, message:"thất bại"});
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+})
+
 router.get('/:id_parish', async function(req, res, next) {
   try{
     const {id_parish} = req.params
@@ -80,5 +97,41 @@ router.post('/sigin', [upload.single('avatar')], async function(req, res, next) 
 });
 
 
+// thay đổi thông tin user 
+
+router.put('/updateChild/:id', [upload.single('avatar')], async function(req, res, next) {
+  try{
+    const {id} = req.params
+    var {name, phone, password, date, branh, gender, id_parish} = req.body
+    let avatar = req.file ? req.file.originalname : null;
+
+    const updateData = {
+      name,
+      phone,
+      date,
+      branh,
+      gender,
+      id_parish,
+    };
+
+    if (avatar) updateData.avatar = avatar;
+    if (password) { 
+      const salt = bcrypt.genSaltSync(10);
+      updateData.password = bcrypt.hashSync(password, salt);
+    }
+
+    
+    const updatedUser = await modelUser.findByIdAndUpdate(id, updateData, { new: true });
+
+    if (updatedUser) {
+      res.json({ status: 1, message: "Cập nhật thành công", user: updatedUser });
+    } else {
+      res.status(404).json({ status: 0, message: "Không tìm thấy người dùng với ID này" });
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+});
 
 module.exports = router;

@@ -37,7 +37,8 @@ export default function ListRoom(props){
   const deleteId = async (id) =>{
     try {
       const res = await axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/rooms/deleteRoom/${id}`,{ revalidate: 3600 }).then((res) => res.data)
-      console.log(res);
+      // console.log(res);
+      window.location.reload()
     } catch (error) {
       console.log(error);
     }

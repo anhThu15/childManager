@@ -23,7 +23,7 @@ export default function DetailRoom(props){
         }
         // console.log(data);
 
-        const res = await axios.post(`http://localhost:3000/rooms/addChildByName`,data).then((res) => res.data)
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/rooms/addChildByName`,data).then((res) => res.data)
         
 
       } catch (error) {
@@ -34,7 +34,7 @@ export default function DetailRoom(props){
 
   const handleDelete = async (_id) => {
     // console.log(_id._id);
-    const res = await axios.post(`http://localhost:3000/rooms/deleteChild/${_id._id}`).then((res) => res.data)
+    const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/rooms/deleteChild/${_id._id}`).then((res) => res.data)
     window.location.reload();
   }
 
