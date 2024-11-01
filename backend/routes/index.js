@@ -70,11 +70,19 @@ router.post('/checkChild', async function(req, res, next) {
 
 
 
-router.post('/feedBack', async function(req, res, next) {
+router.post('/feedBack/:id_user', async function(req, res, next) {
   try{
-    const {id_user, description, date} = req.body
-    const feedBack = {id_user, description, date}
-    var data = await modelFeedback.create(feedBack)
+    const {id_user} = req.params
+    const { description} = req.body
+    const newFeedback = {
+      id_user,
+      description,
+      date: new Date().toLocaleString('vi-VN', {
+        timeZone: 'Asia/Ho_Chi_Minh', 
+      }) 
+    }
+    // const feedBack = {id_user, description, date}
+    var data = await modelFeedback.create(newFeedback)
 
     res.json(data)
     
@@ -82,6 +90,25 @@ router.post('/feedBack', async function(req, res, next) {
         res.json({status: 0, message:"không tìm thấy sản phẩm "})
   }
 });
+
+router.get('/feedBack/:id_user', async function(req, res, next) {
+  try{
+    const {id_user} = req.params
+    var data = await modelFeedback.find({id_user : id_user})
+
+    if(data){
+      res.json({data,message:"thành công", status:1})
+    }else{
+      res.json({data,message:"thất bại", status:0})
+    }
+
+    // res.json(data)
+    
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+});
+
 
 router.get('/parish', async function(req, res, next) {
   try{

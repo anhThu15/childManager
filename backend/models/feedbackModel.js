@@ -9,8 +9,8 @@ const nhanxet = new Schema({
     },
     date: {
         type: String
-        // ,
-        // required: true
+        ,
+        required: true
     },
     id_user: {
         type: ObjectId,

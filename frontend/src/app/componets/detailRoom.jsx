@@ -134,7 +134,7 @@ export default function DetailRoom(props){
                             <Link href='/takeleave' className="btn btn-ghost btn-md">1/3</Link>
                           </th>
                           <th>
-                            <Link href='/feedback' className="btn btn-ghost btn-md"><i class="fa-regular fa-message"></i></Link>
+                            <Link href={`/feedback/${_id}`} className="btn btn-ghost btn-md"><i class="fa-regular fa-message"></i></Link>
                           </th>
                           <th>
                             <details className="dropdown">
