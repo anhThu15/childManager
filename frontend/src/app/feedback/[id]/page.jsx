@@ -54,7 +54,7 @@ export default function Feedback({params}){
                 <button type="submit" className="btn bg-slate-600 text-cyan-50 ms-5 mt-2">Nhận Xét</button>
                 </form>
                 <p class=" ms-5 mt-2 italic text-xl font-bold">Các Nhận Xét Thiếu Nhi</p>
-                    <div className=" overflow-auto" style={{height:"125px"}}>
+                    <div className=" ms-5 me-5 overflow-auto" style={{height:"125px"}}>
                       {child?.data?.map((tn) => {
                         return(
                             <div role="alert" className="alert alert-success mt-2">
