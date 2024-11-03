@@ -22,7 +22,7 @@ export default function ListRoom(props){
 
     getGLV();
   },[])
-  // console.log(GLV);
+  console.log(GLV);
   
 
   const detailId = async (id) =>{
