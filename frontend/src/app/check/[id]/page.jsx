@@ -52,7 +52,7 @@ export default function Check({params}){
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/checkChild`,{students},{ revalidate: 3600 }).then((res) => res.data)
       if(res){
         alert('Thành Công rồi đi chữa lành thôi')
-        // router.back()
+        router.back()
       }else{
         alert('Thất Bại')
       }
