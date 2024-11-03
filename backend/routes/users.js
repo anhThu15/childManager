@@ -55,9 +55,9 @@ router.post('/login', async function(req, res, next) {
       return res.status(400).json({ message: "Mật khẩu không chính xác" });
     }
 
-    // res.render('admin_product', { title: 'Trang Quản Lý Sản Phẩm', products:data });
+  // res.render('admin_product', { title: 'Trang Quản Lý Sản Phẩm', products:data });
   }catch(e){
-        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+        res.json({status: 0, message:"không tìm thấy sản phẩm 2"})
   }
   res.json(data)
 });
@@ -65,7 +65,7 @@ router.post('/login', async function(req, res, next) {
 
 
 router.post('/sigin', [upload.single('avatar')], async function(req, res, next) {
-  try{
+  // try{
     var {name, phone, password, date, branh, gender, id_parish} = req.body
     var avatar = req.file.originalname
     const salt = bcrypt.genSaltSync(10);
@@ -88,10 +88,9 @@ router.post('/sigin', [upload.single('avatar')], async function(req, res, next) 
           res.json({status: 0, message:"thất bại"});
       }
     }
-
-  }catch(e){
-        res.json({status: 0, message:"không tìm thấy sản phẩm "})
-  }
+  // }catch(e){
+  //       res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  // }
 });
 
 

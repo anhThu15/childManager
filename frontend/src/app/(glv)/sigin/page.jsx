@@ -25,7 +25,7 @@ export default function Sigin(){
   
   const onSigin = async (data) => {
     try {
-      console.log(data , date.value);
+      // console.log(data , date.value);
       const formData = new FormData();
       for (const key in data) {
         formData.append(key, data[key]);

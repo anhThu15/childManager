@@ -13,10 +13,10 @@ export default function Login(){
   // xử lý form 
   const onLogin = async (data) => {
     try {
-      console.log(data);
+      // console.log(data);
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`,data)
                                 .then((res)=>res.data)
-      // console.log(res.role);
+      console.log(res);
      if(res.role == "GLV"){
        router.push('/')
        setUser(res)
