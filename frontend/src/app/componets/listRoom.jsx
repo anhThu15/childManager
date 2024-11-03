@@ -16,13 +16,13 @@ export default function ListRoom(props){
 
   useEffect(()=>{
     const getGLV = async () => {
-        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/${id_parish}`,{ revalidate: 3600 }).then((res) => res.data)
+        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/${id_parish}`,{ revalidate: 3600 }).then((res) => res.data)
         setGLV(res)
     }
 
     getGLV();
   },[])
-  console.log(GLV);
+  // console.log(id_parish);
   
 
   const detailId = async (id) =>{

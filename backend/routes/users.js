@@ -24,12 +24,10 @@ router.get('/:id', async function(req, res, next) {
   }
 })
 
-router.get('/:id_parish', async function(req, res, next) {
+router.post('/:parish', async function(req, res, next) {
   try{
-    const {id_parish} = req.params
-    const result = await modelUser.find({role: "GLV", id_parish: id_parish})
-
-
+    const {parish} = req.params
+    const result = await modelUser.find({role: "GLV", id_parish: parish})
     if(result != null){
       res.json({status: 1, message:"Thành công", result});
     }else{
