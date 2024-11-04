@@ -43,7 +43,7 @@ export default function Sigin(){
             .then((res)=>res.data)
       if (res) {
       alert('thành công ròi đi chữa lãnh hoy ~~~')
-      router.push('/child/login');
+      router.push('/students/login');
       } else {
       // Xử lý hiển thị lỗi
       console.error(result.error);
