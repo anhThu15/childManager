@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 var upload = require('../ulity/upload');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 
 var modelUser = require('../models/userModel');
 
@@ -116,17 +116,17 @@ router.put('/updateChild/:id', [upload.single('avatar')], async function(req, re
   
 });
 
-router.get('/checktoken', async (req, res, next) => {
-  const token = req.headers.authorization.split(' ')[1];
-  jwt.verify(token, 'secret', (err, user) => {
-    if (err) {
-      return res.status(401).json({ message: "Token không hợp lệ" });
-    }
-    res.status(200).json({ message: "Token hợp lệ" });
-  }
-  );
-}
-);
+// router.get('/checktoken', async (req, res, next) => {
+//   const token = req.headers.authorization.split(' ')[1];
+//   jwt.verify(token, 'secret', (err, user) => {
+//     if (err) {
+//       return res.status(401).json({ message: "Token không hợp lệ" });
+//     }
+//     res.status(200).json({ message: "Token hợp lệ" });
+//   }
+//   );
+// }
+// );
 
 router.get('/:id', async function(req, res, next) {
   try{

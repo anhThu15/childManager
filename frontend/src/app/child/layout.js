@@ -1,7 +1,7 @@
 import { Inter } from "next/font/google";
 import "../globals.css";
 import Header from "../layout/headerChild";
-import Footer from "../layout/footerChild";
+import End from "../layout/footerChild";
 
 
 const inter = Inter({ subsets: ["latin"] });
@@ -20,7 +20,7 @@ export default function RootLayout({ children }) {
               <div className="w-8/12 shadow-lg">
                 <Header></Header>
                 {children}
-                <Footer></Footer>
+                <End></End>
               </div>
             </div>
         </div>

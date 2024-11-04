@@ -1,16 +1,10 @@
 'use client'
 import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
-import { useForm } from 'react-hook-form';
-import axios from "axios";
 import Link from "next/link";
 
 export default function Login(){
-  const router = useRouter();
-  
-  
-
-
+//   const router = useRouter();
     return (
         <>
             <div className="h-96">
