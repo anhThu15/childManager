@@ -96,7 +96,7 @@ export default function Sigin(){
 
                       <div className="max-w-md">
                         <div className="mb-2 block">
-                          <Label value="Giáo Họ :" />
+                          <Label value="Giáo Xứ :" />
                         </div>
                           <Select id="countries" required {...register('id_parish', { required: 'Giáo Xứ là bắt buộc' })}>
                             <option>Chọn Giáo Xứ</option>

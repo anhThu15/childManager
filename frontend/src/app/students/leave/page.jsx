@@ -1,31 +1,31 @@
 'use client'
+import { Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 
 export default function Feedback(){
+  const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
+  const id = user._id
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const router = useRouter()
   
-
-  useEffect(() => {
-
-  },[])
 
 
   const onLeave = async (data) => {
-    console.log(data);
-    // try {
-    //   const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/feedBack/${id}`,data).then((res) => res.data)
-    //   if(res){
-    //     alert('Nhận xét thiếu nhi thành công')
-    //     window.location.reload()
-    //   }else{
-    //     alert('nhận xét thất bại')
-    //   }
+    try {
+      const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/leaves/add/${id}`,data).then((res) => res.data)
+      if(res){
+        alert('Nhận xét thiếu nhi thành công')
+        // router.back()
+      }else{
+        alert('nhận xét thất bại')
+      }
 
-    // } catch (error) {
-    //   console.log(error);
-    // }
+    } catch (error) {
+      console.log(error);
+    }
   }
   
 
@@ -34,13 +34,41 @@ export default function Feedback(){
             <div className="h-96">
                 <p class=" ms-5 italic text-2xl font-bold">Đơn Xin Nghỉ Phép</p>
                 <form action="" onSubmit={handleSubmit(onLeave)}>
+                {/* <div className="max-w-md ms-5 me-5">
+                        <div className="mb-2 block">
+                          <Label value="Ngày Muốn Nghỉ " />
+                        </div>
+                          <Datepicker dateFormat="yyyy/MM/dd"  id="date" onChange={(date) => setValue('date', date)}  />
+                          {errors.date && <div className="text-red-500">{errors.date.message}</div>}
+                </div> */}
                 <label className="ms-5 me-5 form-control">
                   <textarea className="textarea textarea-bordered h-24" placeholder="Nhập Xét" 
                             {...register('description', { required: 'Chưa nhập nhận xét' })}></textarea>
                             {errors.description && <div className="text-red-500">{errors.description.message}</div>}
                 </label>
-                <button type="submit" className="btn bg-slate-600 text-cyan-50 ms-5 mt-2">Nhận Xét</button>
+                <button type="submit" className="btn bg-slate-600 text-cyan-50 ms-5 mt-2">Gửi</button>
                 </form>
+                <p class=" ms-5 mt-2 italic text-xl font-bold">Trả Lời Của GLV:</p>
+                    <div className=" ms-5 me-5 overflow-auto" style={{height:"125px"}}>
+                      {/* {child?.data?.map((tn) => {
+                        return(
+                            <div role="alert" className="alert alert-success mt-2">
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-6 w-6 shrink-0 stroke-current"
+                                fill="none"
+                                viewBox="0 0 24 24">
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth="2"
+                                  d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                              <span>{tn.description}</span>
+                            </div>
+                        )
+                      })} */}
+                    </div>
             </div>
         </>
     );

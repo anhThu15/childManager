@@ -11,7 +11,11 @@ export default function DetailRoom(props){
   const id_roomlRef = useRef('');
   const id_parishRef = useRef('');
   const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
-  const [dateNow, setDateNow] = useState(new Date().toLocaleString('vi-VN').substring(9))
+  // const [dateNow, setDateNow] = useState(new Date().toLocaleString('vi-VN').substring(9))
+  const [count, setCount] = useState([])
+
+  
+  
 
   const handleAdd = async (e) => {
     // console.log(nameRef.current.value, id_roomlRef.current.value, id_parishRef.current.value);
@@ -100,7 +104,7 @@ export default function DetailRoom(props){
                     <th>Họ & Tên</th>
                     <th>Ngày Tháng Năm Sinh</th>
                     <th>Ngành</th>
-                    <th>Số Lần Nghỉ</th>
+                    <th>Đơn Xin Nghỉ Phép</th>
                     <th>Nhận Xét</th>
                     <th></th>
                   </tr>
@@ -131,7 +135,10 @@ export default function DetailRoom(props){
                           <td>{new Date(date).toLocaleDateString('vi-VN')}</td>
                           <td>Ngành {branh}</td>
                           <th>
-                            <Link href='/takeleave' className="btn btn-ghost btn-md">1/3</Link>
+                            <Link href={`/takeleave/${_id}`} className="indicator">
+                              <span className="indicator-item badge badge-warning">99+</span>
+                              <button className="btn flex justify-center"><i class="fa-solid fa-note-sticky fa-xl"></i></button>
+                            </Link>
                           </th>
                           <th>
                             <Link href={`/feedback/${_id}`} className="btn btn-ghost btn-md"><i class="fa-regular fa-message"></i></Link>
@@ -157,7 +164,7 @@ export default function DetailRoom(props){
                         <th>Họ & Tên</th>
                         <th>Ngày Tháng Năm Sinh</th>
                         <th>Ngành</th>
-                        <th>Số Lần Nghỉ</th>
+                        <th>Đơn Xin Nghỉ Phép</th>
                         <th>Nhận Xét</th>
                     </tr>
                 </tfoot>

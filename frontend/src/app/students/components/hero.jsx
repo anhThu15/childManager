@@ -1,4 +1,5 @@
 import Cookies from "js-cookie";
+import Link from "next/link";
 
 
 
@@ -18,7 +19,7 @@ export default function Hero(){
                   <p className="py-1"><b>Ngày Tháng Năm Sinh:</b> {user.date}</p>
                   <p className="py-1"><b>Ngành:</b> {user.branh}</p>
                   <p className="py-1"><b>Số Điện Thoại:</b> {user.phone}</p>
-                  <button className="btn btn-primary mt-3">Đơn Xin Nghỉ Phép Online</button>
+                  <Link href={'/students/leave'} className="btn btn-primary mt-3">Đơn Xin Nghỉ Phép Online</Link>
                 </div>
               </div>
             </div>

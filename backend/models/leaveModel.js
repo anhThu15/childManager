@@ -13,7 +13,8 @@ const nghiphep = new Schema({
     },
     check: {
         type: Boolean, // kiểu dữ liệu
-        required: true, // bắt buộc phải có
+        // required: true, 
+        default: null// bắt buộc phải có
     },
     id_user: {
         type: ObjectId,
