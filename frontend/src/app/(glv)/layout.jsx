@@ -13,7 +13,9 @@ export default function RootLayout({ children }) {
             <div className="flex justify-center mt-20">
               <div className="w-8/12 shadow-lg">
                 <Header></Header>
+                
                 {children}
+                
                 <End></End>
               </div>
             </div>

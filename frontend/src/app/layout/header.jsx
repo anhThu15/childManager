@@ -11,7 +11,7 @@ export default function Header(){
         <>
             <div className="navbar bg-base-100 ">
               <div className="flex-1">
-                <Link href="/" className="btn btn-ghost text-xl font-mono">M.C.P.R</Link>
+                {user ?(<Link href="/" className="btn btn-ghost text-xl font-mono">M.C.P.R</Link>):(<Link href="/choice" className="btn btn-ghost text-xl font-mono">M.C.P.R</Link>)}
               </div>
               <div className="flex-none gap-2">
               {user ? (
