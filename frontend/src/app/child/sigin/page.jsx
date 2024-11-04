@@ -43,7 +43,7 @@ export default function Sigin(){
             .then((res)=>res.data)
       if (res) {
       alert('thành công ròi đi chữa lãnh hoy ~~~')
-      router.push('/login');
+      router.push('/child/login');
       } else {
       // Xử lý hiển thị lỗi
       console.error(result.error);
@@ -58,7 +58,7 @@ export default function Sigin(){
     return (
         <>
             <div className="h-96 overflow-x-auto">
-                <p className="text-3xl font-bold text-center mb-2">Đăng Ký Cho Giáo Lý Viên</p>
+                <p className="text-3xl font-bold text-center mb-2">Đăng Ký Cho Thiếu Nhi</p>
                 <div className="flex justify-center">
                 <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit(onSigin)}>
                       <div>
@@ -69,7 +69,8 @@ export default function Sigin(){
                                    {...register('name', { required: 'Tên đăng nhập là bắt buộc' })} />
                                    {errors.name && <div className="text-red-500">{errors.name.message}</div>}
                       </div>
-                      <input type="hidden" value={'GLV'}  {...register('role')}/>
+                      <input type="hidden" value={'Thiếu Nhi'}  {...register('role')}/>
+                      
                       <div>
                         <div className="mb-2 block">
                           <Label value="Mật Khẩu: " />

@@ -2,44 +2,11 @@ var express = require('express');
 var router = express.Router();
 const bcrypt = require('bcryptjs');
 var upload = require('../ulity/upload');
+const jwt = require('jsonwebtoken');
 
 var modelUser = require('../models/userModel');
 
 /* GET users listing. */
-
-router.get('/:id', async function(req, res, next) {
-  try{
-    const {id} = req.params
-    const result = await modelUser.findById(id)
-
-
-    if(result != null){
-      res.json({status: 1, message:"Thành công", result});
-    }else{
-      res.json({status: 0, message:"thất bại"});
-    }
-
-  }catch(e){
-        res.json({status: 0, message:"không tìm thấy sản phẩm "})
-  }
-})
-
-router.post('/:parish', async function(req, res, next) {
-  try{
-    const {parish} = req.params
-    const result = await modelUser.find({role: "GLV", id_parish: parish})
-    if(result != null){
-      res.json({status: 1, message:"Thành công", result});
-    }else{
-      res.json({status: 0, message:"thất bại"});
-    }
-
-  }catch(e){
-        res.json({status: 0, message:"không tìm thấy sản phẩm "})
-  }
-})
-
-
 router.post('/login', async function(req, res, next) {
   try{
     var {name, password } = req.body
@@ -63,10 +30,9 @@ router.post('/login', async function(req, res, next) {
 });
 
 
-
 router.post('/sigin', [upload.single('avatar')], async function(req, res, next) {
-  // try{
-    var {name, phone, password, date, branh, gender, id_parish} = req.body
+  try{
+    var {name, phone, password, date, branh, gender,role, id_parish} = req.body
     var avatar = req.file.originalname
     const salt = bcrypt.genSaltSync(10);
     const hash = bcrypt.hashSync(password, salt); 
@@ -77,7 +43,7 @@ router.post('/sigin', [upload.single('avatar')], async function(req, res, next) 
     }else{
 
       const newUser = modelUser({ 
-        name, phone, password:hash, date, branh, avatar, gender , role:'Thiếu Nhi', id_parish
+        name, phone, password:hash, date, branh, avatar, gender , role, id_parish
       });
 
       await newUser.save()
@@ -88,10 +54,28 @@ router.post('/sigin', [upload.single('avatar')], async function(req, res, next) 
           res.json({status: 0, message:"thất bại"});
       }
     }
-  // }catch(e){
-  //       res.json({status: 0, message:"không tìm thấy sản phẩm "})
-  // }
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
 });
+
+
+router.get('/parish/:parish', async function(req, res, next) {
+  try{
+    const {parish} = req.params
+    const result = await modelUser.find({role: "GLV", id_parish: parish})
+    // res.json(parish)
+    if(result != null){
+      res.json({status: 1, message:"Thành công", result});
+    }else{
+      res.json({status: 0, message:"thất bại"});
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+})
+
 
 
 // thay đổi thông tin user 
@@ -129,6 +113,36 @@ router.put('/updateChild/:id', [upload.single('avatar')], async function(req, re
   }catch(e){
         res.json({status: 0, message:"không tìm thấy sản phẩm "})
   }
+  
 });
+
+router.get('/checktoken', async (req, res, next) => {
+  const token = req.headers.authorization.split(' ')[1];
+  jwt.verify(token, 'secret', (err, user) => {
+    if (err) {
+      return res.status(401).json({ message: "Token không hợp lệ" });
+    }
+    res.status(200).json({ message: "Token hợp lệ" });
+  }
+  );
+}
+);
+
+router.get('/:id', async function(req, res, next) {
+  try{
+    const {id} = req.params
+    const result = await modelUser.findById(id)
+
+
+    if(result != null){
+      res.json({status: 1, message:"Thành công", result});
+    }else{
+      res.json({status: 0, message:"thất bại"});
+    }
+
+  }catch(e){
+        res.json({status: 0, message:"không tìm thấy sản phẩm "})
+  }
+})
 
 module.exports = router;

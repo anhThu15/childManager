@@ -3,14 +3,14 @@ import axios from "axios";
 import { Button, Label, TextInput, Select, Datepicker, FileInput } from "flowbite-react";
 import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
-import { useLocalStorage } from "react-use";
+import Cookies from 'js-cookie';
 
 
 export default function DetailRoom(props){
   const nameRef = useRef('');
   const id_roomlRef = useRef('');
   const id_parishRef = useRef('');
-  const [user] = useLocalStorage('user', {});
+  const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
   const [dateNow, setDateNow] = useState(new Date().toLocaleString('vi-VN').substring(9))
 
   const handleAdd = async (e) => {

@@ -2,21 +2,21 @@
 import { Accordion, AccordionContent, AccordionPanel, AccordionTitle,Button, Label, TextInput, Select, Datepicker, FileInput  } from "flowbite-react";
 import DetailRoom from "./detailRoom";
 import axios from 'axios';
-import { useLocalStorage } from 'react-use';
+import Cookies from 'js-cookie';
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 
 export default function ListRoom(props){
   const [details, setDetail]  = useState(null)
   const [GLV, setGLV]  = useState([])
-  const [user] = useLocalStorage('user', {});
+  const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
 
   const id_parish = user.id_parish
 
   useEffect(()=>{
     const getGLV = async () => {
-        const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/${id_parish}`,{ revalidate: 3600 }).then((res) => res.data)
+        const res = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/users/parish/${id_parish}`,{ revalidate: 3600 }).then((res) => res.data)
         setGLV(res)
     }
 

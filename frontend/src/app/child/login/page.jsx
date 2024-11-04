@@ -3,11 +3,12 @@ import { Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useRouter } from "next/navigation";
 import { useForm } from 'react-hook-form';
 import axios from "axios";
-import Cookies from 'js-cookie';
+import { useLocalStorage } from 'react-use';
 
 export default function Login(){
   const router = useRouter();
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
+  const [user, setUser, removeUser] = useLocalStorage('user', {});
   
   // xử lý form 
   const onLogin = async (data) => {
@@ -15,10 +16,9 @@ export default function Login(){
       // console.log(data);
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/users/login`,data)
                                 .then((res)=>res.data)
-      // console.log(res);
-     if(res.role == "GLV"){
-       Cookies.set('user', JSON.stringify(res), { expires: 7 });
-       router.push('/')
+      console.log(res);
+     if(res.role == "Thiếu Nhi"){
+       router.push('/child')
        setUser(res)
      }else{
        alert('sai tên đăng nhập hoặc mật khẩu')
@@ -35,7 +35,7 @@ export default function Login(){
     return (
         <>
             <div className="h-96">
-                <p className="text-3xl font-bold text-center mb-2">Đăng Nhập Cho Giáo Lý Viên</p>
+                <p className="text-3xl font-bold text-center mb-2">Đăng Nhập Cho Thiếu Nhi</p>
                 <div className="flex justify-center">
                     <form className="flex max-w-md flex-col gap-4" onSubmit={handleSubmit(onLogin)}>
                       <div>

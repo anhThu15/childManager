@@ -1,6 +1,6 @@
 'use client'
 import { Badge } from "flowbite-react";
-import { useLocalStorage } from 'react-use';
+import Cookies from 'js-cookie';
 import { useForm } from 'react-hook-form';
 import useSWR from "swr";
 import { useState } from "react";
@@ -9,7 +9,7 @@ import axios from "axios";
 const fetcher = (...args)=>fetch(...args).then((res)=>res.json())
 
 export default function Check({params}){
-  const [user] = useLocalStorage('user', null);
+  const user = Cookies.get('user') ? JSON.parse(Cookies.get('user')) : null;
   const router = useRouter()
   const { register, handleSubmit, setValue, formState: { errors } } = useForm();
   const [isChecked, setIsChecked] = useState(false);
