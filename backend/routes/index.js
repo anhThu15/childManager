@@ -70,6 +70,48 @@ router.post('/checkChild', async function(req, res, next) {
 
 
 
+router.post('/attendanceByDate/:dates', async function(req, res, next) {
+  try {
+    const { dates } = req.params; // "2024-11-01"
+    const { user_ids } = req.body; // user_ids được truyền từ body
+
+    if (!dates) {
+      return res.json({ status: 0, message: "Ngày không hợp lệ" });
+    }
+
+    // Chuyển date thành định dạng ngày trong chuỗi ("1/11/2024" cho tìm kiếm)
+    const dateParts = dates.split('-');
+    const formattedDate = `${parseInt(dateParts[2], 10)}/${parseInt(dateParts[1], 10)}/${dateParts[0]}`;
+
+    // Kiểm tra nếu không có user_ids
+    if (!user_ids || !Array.isArray(user_ids) || user_ids.length === 0) {
+      return res.json({ status: 0, message: "Danh sách user_id không hợp lệ" });
+    }
+
+    // Tìm kiếm các điểm danh với các điều kiện user_ids và ngày
+    const attendances = await modelDifferences.find({
+      date: { $regex: formattedDate }, // Tìm kiếm theo ngày
+      id_user: { $in: user_ids } // So khớp user_id
+    }).populate('id_user');;
+
+    if (attendances.length === 0) {
+      return res.json({ status: 0, message: "Không tìm thấy điểm danh cho ngày này và user_id đã chọn" });
+    }
+
+    const userIds = attendances.map(attendance => attendance.id_user);
+
+    res.json({ status: 1, message: "Danh sách điểm danh theo user_id và ngày", attendances });
+  } catch (error) {
+    console.error("Error fetching attendance by date:", error);
+    res.json({ status: 0, message: "Có lỗi xảy ra khi lấy danh sách điểm danh", error: error.message });
+  }
+});
+
+
+
+
+
+
 router.post('/feedBack/:id_user', async function(req, res, next) {
   try{
     const {id_user} = req.params
