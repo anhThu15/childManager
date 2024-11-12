@@ -1,16 +1,27 @@
 import { NextResponse } from 'next/server';
 
 export function middleware(request) {
-//   const user = request.cookies.get('user');
+  const user = request.cookies.get('user');
+  const url = request.nextUrl.pathname;
+
+  const allowedUnauthenticatedPaths = ['/choice', '/login', '/signin', '/students/login', '/students/signin'];
 
   
-//   if (!user) {
-//     return NextResponse.redirect(new URL('/choice', request.url));
-//   }
+  if (!user) {
+    if (!allowedUnauthenticatedPaths.includes(url)) {
+      return NextResponse.redirect(new URL('/choice', request.url));
+    }
+  } else {
+    if (url.startsWith('/students')) {
+      return NextResponse.next();
+    } else if (url.includes('/students')) {
+      return NextResponse.redirect(new URL('/students/restricted', request.url));
+    }
+  }
 
-//   return NextResponse.next();
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: ['/', '/((?!choice|login|child/login).*)'],
+  matcher: ['/((?!api|_next|static).*)'], 
 };
