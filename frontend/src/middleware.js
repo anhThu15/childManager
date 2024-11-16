@@ -4,7 +4,7 @@ export function middleware(request) {
   const user = request.cookies.get('user');
   const url = request.nextUrl.pathname;
 
-  const allowedUnauthenticatedPaths = ['/choice', '/login', '/signin', '/students/login', '/students/signin'];
+  const allowedUnauthenticatedPaths = ['/choice', '/login', '/sigin', '/students/login', '/students/sigin'];
 
   
   if (!user) {

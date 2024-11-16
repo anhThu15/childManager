@@ -30,7 +30,7 @@ export default function Header(){
                     <ul
                       tabIndex={0}
                       className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-                      <li><button onClick={() => {Cookies.remove('user'); router.push('/login')}}>Logout</button></li>
+                      <li><button onClick={() => {Cookies.remove('user'); router.push('/choice')}}>Logout</button></li>
                     </ul>
                 </div>
                   </>
