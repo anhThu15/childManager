@@ -78,6 +78,22 @@ router.get('/rep/:id_user', async function(req, res, next) {
   }
 });
 
+router.get('/feedback/:id_user', async function(req, res, next) {
+  try {
+    const { id_user } = req.params;
+    const data = await modelFeedback.find({ id_user: id_user}).sort({ date: -1 })
+
+    if (!data) {
+      return res.status(404).json({ status: 0, message: "Không tìm thấy đơn xin nghỉ" });
+    }
+
+    res.json(data);
+  } catch (e) {
+    console.error(e); // In lỗi ra console để dễ debug
+    res.status(500).json({ status: 0, message: "Có lỗi xảy ra" });
+  }
+});
+
 
 router.get('/:id_user', async function(req, res, next) {
   try {

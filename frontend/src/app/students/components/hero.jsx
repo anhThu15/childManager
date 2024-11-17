@@ -19,7 +19,8 @@ export default function Hero(){
                   <p className="py-1"><b>Ngày Tháng Năm Sinh:</b> {user.date}</p>
                   <p className="py-1"><b>Ngành:</b> {user.branh}</p>
                   <p className="py-1"><b>Số Điện Thoại:</b> {user.phone}</p>
-                  <Link href={'/students/leave'} className="btn btn-primary mt-3">Đơn Xin Nghỉ Phép Online</Link>
+                  <Link href={'/students/leave'} className="btn btn-primary mt-3">Đơn Xin Nghỉ Phép Online</Link> <br />
+                  <Link href={'/students/feedback'} className="btn btn-neutral mt-3">Đánh Giá Của Giáo Lý Viên</Link>
                 </div>
               </div>
             </div>
